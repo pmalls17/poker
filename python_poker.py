@@ -1,9 +1,6 @@
 import random
-## Code by Paul Mallary && Brendan Aszklar
-#python project
-
-
-
+stake=100
+ante=10
 class hand:
     """model of hand
        Attriutes:
@@ -23,28 +20,39 @@ class card:
     rank=2
     suit=20
 
-stake=100
-ante=10
 def main():
     """Main method of the program
        Parameters: n/a
     """
     global stake
     global ante
-    startup()
-    randomNumber()
-    sort_hand(hand)
-    print("player hand")
-    printHand(hand.card1,hand.card2,hand.card3)
-    randomNumber()
-    sort_hand(hand)
-    print("computer hand")
-    printHand(hand.card1,hand.card2,hand.card3)
-    if playOrFold()=="y":
-        stake=stake+ante
-    else:
-        stake=stake-ante
-    main()
+    if startup()=="y":
+        randomNumber()
+        sort_hand(hand)
+        hand1=hand()
+        PlayerHand=checkRank(hand1)
+        print(":player hand")
+        printHand(hand.card1,hand.card2,hand.card3)
+        randomNumber()
+        sort_hand(hand)
+        hand2=hand()
+        ComputerHand=checkRank(hand2)
+        if playOrFold()=="y":
+            if doesComputerFold(hand2)==False:
+                if higher_hand(PlayerHand,ComputerHand)==True:
+                    stake=stake+2*ante
+                    print("player wins!")
+                else:
+                    stake=stake-2*ante
+                    print("computer wins!")
+            else:
+                stake=stake+ante
+                print(":computer folds")
+        else:
+            stake=stake-ante
+        print(":computer hand")
+        printHand(hand.card1,hand.card2,hand.card3)  
+        main()
     
 def playOrFold():
     """ determines if the player is going to play or fold
@@ -79,7 +87,8 @@ def startup():
             else:
                 play="p"
     else:
-        return "y"
+        print("goodbye")
+        return "n"
     
         
  
@@ -107,7 +116,7 @@ def randomNumber():
     c3.rank=rank3
     c3.suit=suit3
     hand.card3=c3
-
+    
 
 def sort_hand(hand):
     """Sort a hand of cards into ascending order in place
@@ -135,322 +144,428 @@ def printHand(card1,card2,card3):
     x=card1.rank
     y=card1.suit
     if x==2 and y==20:
-        print("2C")
+        d="2C"
     elif x==3 and y==20:
-        print("3C")
+        d="3C"
     elif x==4 and y==20:
-        print("4C")
+        d="4C"
     elif x==5 and y==20:
-        print("5C")
+        d="5C"
     elif x==6 and y==20:
-        print("6C")
+        d="6C"
     elif x==7 and y==20:
-        print("7C")
+        d="7C"
     elif x==8 and y==20:
-        print("8C")
+        d="8C"
     elif x==9 and y==20:
-        print("9C")
+        d="9C"
     elif x==10 and y==20:
-        print("10C")
+        d="10C"
     elif x==11 and y==20:
-        print("JC")
+        d="JC"
     elif x==12 and y==20:
-        print("QC")
+        d="QC"
     elif x==13 and y==20:
-        print("KC")
+        d="KC"
     elif x==14 and y==20:
-        print("AC")
+        d="AC"
     elif x==2 and y==21:
-        print("2D")
+        d="2D"
     elif x==3 and y==21:
-        print("3D")
+        d="3D"
     elif x==4 and y==21:
-        print("4D")
+        d="4D"
     elif x==5 and y==21:
-        print("5D")
+        d="5D"
     elif x==6 and y==21:
-        print("6D")
+        d="6D"
     elif x==7 and y==21:
-        print("7D")
+        d="7D"
     elif x==8 and y==21:
-        print("8D")
+        d="8D"
     elif x==9 and y==21:
-        print("9D")
+        d="9D"
     elif x==10 and y==21:
-        print("10D")
+        d="10D"
     elif x==11 and y==21:
-        print("JD")
+        d="JD"
     elif x==12 and y==21:
-        print("QD")
+        d="QD"
     elif x==13 and y==21:
-        print("KD")
+        d="KD"
     elif x==14 and y==21:
-        print("AD")
+        d="AD" 
     elif x==2 and y==22:
-        print("2H")
+        d="2H"
     elif x==3 and y==22:
-        print("3H")
+        d="3H"
     elif x==4 and y==22:
-        print("4H")
+        d="4H"
     elif x==5 and y==22:
-        print("5H")
+        d="5H"
     elif x==6 and y==22:
-        print("6H")
+        d="6H"
     elif x==7 and y==22:
-        print("7H")
+        d="7H"
     elif x==8 and y==22:
-        print("8H")
+        d="8H"
     elif x==9 and y==22:
-        print("9H")
+        d="9H"
     elif x==10 and y==22:
-        print("10H")
+        d="10H"
     elif x==11 and y==22:
-        print("JH")
+        d="JH"
     elif x==12 and y==22:
-        print("QH")
+        d="QH"
     elif x==13 and y==22:
-        print("KH")
+        d="KH"
     elif x==14 and y==22:
-        print("AH")
+        d="AH"
     elif x==2 and y==23:
-        print("2S")
+        d="2S"
     elif x==3 and y==23:
-        print("3S")
+        d="3S"
     elif x==4 and y==23:
-        print("4S")
+        d="4S"
     elif x==5 and y==23:
-        print("5S")
+        d="5S"
     elif x==6 and y==23:
-        print("6S")
+        d="6S"
     elif x==7 and y==23:
-        print("7S")
+        d="7S"
     elif x==8 and y==23:
-        print("8S")
+        d="8S"
     elif x==9 and y==23:
-        print("9S")
+        d="9S"
     elif x==10 and y==23:
-        print("10S")
+        d="10S"
     elif x==11 and y==23:
-        print("JS")
+        d="JS"
     elif x==12 and y==23:
-        print("QS")
+        d="QS"
     elif x==13 and y==23:
-        print("KS")
+        d="KS"
     elif x==14 and y==23:
-        print("AS")
+        d="AS"
     x=card2.rank
     y=card2.suit
     if x==2 and y==20:
-        print("2C")
+        c="2C"
     elif x==3 and y==20:
-        print("3C")
+        c="3C"
     elif x==4 and y==20:
-        print("4C")
+        c="4C"
     elif x==5 and y==20:
-        print("5C")
+        c="5C"
     elif x==6 and y==20:
-        print("6C")
+        c="6C"
     elif x==7 and y==20:
-        print("7C")
+        c="7C"
     elif x==8 and y==20:
-        print("8C")
+        c="8C"
     elif x==9 and y==20:
-        print("9C")
+        c="9C"
     elif x==10 and y==20:
-        print("10C")
+        c="10C"
     elif x==11 and y==20:
-        print("JC")
+        c="JC"
     elif x==12 and y==20:
-        print("QC")
+        c="QC"
     elif x==13 and y==20:
-        print("KC")
+        c="KC"
     elif x==14 and y==20:
-        print("AC")
+        c="AC"
     elif x==2 and y==21:
-        print("2D")
+        c="2D"
     elif x==3 and y==21:
-        print("3D")
+        c="3D"
     elif x==4 and y==21:
-        print("4D")
+        c="4D"
     elif x==5 and y==21:
-        print("5D")
+        c="5D"
     elif x==6 and y==21:
-        print("6D")
+        c="6D"
     elif x==7 and y==21:
-        print("7D")
+        c="7D"
     elif x==8 and y==21:
-        print("8D")
+        c="8D"
     elif x==9 and y==21:
-        print("9D")
+        c="9D"
     elif x==10 and y==21:
-        print("10D")
+        c="10D"
     elif x==11 and y==21:
-        print("JD")
+        c="JD"
     elif x==12 and y==21:
-        print("QD")
+        c="QD"
     elif x==13 and y==21:
-        print("KD")
+        c="KD"
     elif x==14 and y==21:
-        print("AD")
+        c="AD" 
     elif x==2 and y==22:
-        print("2H")
+        c="2H"
     elif x==3 and y==22:
-        print("3H")
+        c="3H"
     elif x==4 and y==22:
-        print("4H")
+        c="4H"
     elif x==5 and y==22:
-        print("5H")
+        c="5H"
     elif x==6 and y==22:
-        print("6H")
+        c="6H"
     elif x==7 and y==22:
-        print("7H")
+        c="7H"
     elif x==8 and y==22:
-        print("8H")
+        c="8H"
     elif x==9 and y==22:
-        print("9H")
+        c="9H"
     elif x==10 and y==22:
-        print("10H")
+        c="10H"
     elif x==11 and y==22:
-        print("JH")
+        c="JH"
     elif x==12 and y==22:
-        print("QH")
+        c="QH"
     elif x==13 and y==22:
-        print("KH")
+        c="KH"
     elif x==14 and y==22:
-        print("AH")
+        c="AH"
     elif x==2 and y==23:
-        print("2S")
+        c="2S"
     elif x==3 and y==23:
-        print("3S")
+        c="3S"
     elif x==4 and y==23:
-        print("4S")
+        c="4S"
     elif x==5 and y==23:
-        print("5S")
+        c="5S"
     elif x==6 and y==23:
-        print("6S")
+        c="6S"
     elif x==7 and y==23:
-        print("7S")
+        c="7S"
     elif x==8 and y==23:
-        print("8S")
+        c="8S"
     elif x==9 and y==23:
-        print("9S")
+        c="9S"
     elif x==10 and y==23:
-        print("10S")
+        c="10S"
     elif x==11 and y==23:
-        print("JS")
+        c="JS"
     elif x==12 and y==23:
-        print("QS")
+        c="QS"
     elif x==13 and y==23:
-        print("KS")
+        c="KS"
     elif x==14 and y==23:
-        print("AS")
+        c="AS"
     x=card3.rank
     y=card3.suit
     if x==2 and y==20:
-        print("2C")
+        b="2C"
     elif x==3 and y==20:
-        print("3C")
+        b="3C"
     elif x==4 and y==20:
-        print("4C")
+        b="4C"
     elif x==5 and y==20:
-        print("5C")
+        b="5C"
     elif x==6 and y==20:
-        print("6C")
+        b="6C"
     elif x==7 and y==20:
-        print("7C")
+        b="7C"
     elif x==8 and y==20:
-        print("8C")
+        b="8C"
     elif x==9 and y==20:
-        print("9C")
+        b="9C"
     elif x==10 and y==20:
-        print("10C")
+        b="10C"
     elif x==11 and y==20:
-        print("JC")
+        b="JC"
     elif x==12 and y==20:
-        print("QC")
+        b="QC"
     elif x==13 and y==20:
-        print("KC")
+        b="KC"
     elif x==14 and y==20:
-        print("AC")
+        b="AC"
     elif x==2 and y==21:
-        print("2D")
+        b="2D"
     elif x==3 and y==21:
-        print("3D")
+        b="3D"
     elif x==4 and y==21:
-        print("4D")
+        b="4D"
     elif x==5 and y==21:
-        print("5D")
+        b="5D"
     elif x==6 and y==21:
-        print("6D")
+        b="6D"
     elif x==7 and y==21:
-        print("7D")
+        b="7D"
     elif x==8 and y==21:
-        print("8D")
+        b="8D"
     elif x==9 and y==21:
-        print("9D")
+        b="9D"
     elif x==10 and y==21:
-        print("10D")
+        b="10D"
     elif x==11 and y==21:
-        print("JD")
+        b="JD"
     elif x==12 and y==21:
-        print("QD")
+        b="QD"
     elif x==13 and y==21:
-        print("KD")
+        b="KD"
     elif x==14 and y==21:
-        print("AD")
+        b="AD" 
     elif x==2 and y==22:
-        print("2H")
+        b="2H"
     elif x==3 and y==22:
-        print("3H")
+        b="3H"
     elif x==4 and y==22:
-        print("4H")
+        b="4H"
     elif x==5 and y==22:
-        print("5H")
+        b="5H"
     elif x==6 and y==22:
-        print("6H")
+        b="6H"
     elif x==7 and y==22:
-        print("7H")
+        b="7H"
     elif x==8 and y==22:
-        print("8H")
+        b="8H"
     elif x==9 and y==22:
-        print("9H")
+        b="9H"
     elif x==10 and y==22:
-        print("10H")
+        b="10H"
     elif x==11 and y==22:
-        print("JH")
+        b="JH"
     elif x==12 and y==22:
-        print("QH")
+        b="QH"
     elif x==13 and y==22:
-        print("KH")
+        b="KH"
     elif x==14 and y==22:
-        print("AH")
+        b="AH"
     elif x==2 and y==23:
-        print("2S")
+        b="2S"
     elif x==3 and y==23:
-        print("3S")
+        b="3S"
     elif x==4 and y==23:
-        print("4S")
+        b="4S"
     elif x==5 and y==23:
-        print("5S")
+        b="5S"
     elif x==6 and y==23:
-        print("6S")
+        b="6S"
     elif x==7 and y==23:
-        print("7S")
+        b="7S"
     elif x==8 and y==23:
-        print("8S")
+        b="8S"
     elif x==9 and y==23:
-        print("9S")
+        b="9S"
     elif x==10 and y==23:
-        print("10S")
+        b="10S"
     elif x==11 and y==23:
-        print("JS")
+        b="JS"
     elif x==12 and y==23:
-        print("QS")
+        b="QS"
     elif x==13 and y==23:
-        print("KS")
+        b="KS"
     elif x==14 and y==23:
-        print("AS")
+        b="AS"
+    print(d,c,b)
+
+
+def higher_hand(hand1,hand2):
+    if hand1>=hand2:
+        return True
+    else:
+        return False
+
+def checkRank(hand):
+    if straightFlush(hand)==True:
+        return 7
+    else:
+        if threeOfAKind(hand)==True:
+            return 6
+        else:
+            if straight(hand)==True:
+                return 5
+            else:
+                if flush(hand)==True:
+                    return 4
+                else:
+                    if pair(hand)==True:
+                        return 3
+                    else:
+                        if hand.card3.rank==2:
+                            return 1.02
+                        elif hand.card3.rank==3:
+                            return 1.03
+                        elif hand.card3.rank==4:
+                            return 1.04
+                        elif hand.card3.rank==5:
+                            return 1.05
+                        elif hand.card3.rank==6:
+                            return 1.06
+                        elif hand.card3.rank==7:
+                            return 1.07
+                        elif hand.card3.rank==8:
+                            return 1.08
+                        elif hand.card3.rank==9:
+                            return 1.09
+                        elif hand.card3.rank==10:
+                            return 1.1
+                        elif hand.card3.rank==11:
+                            return 1.11
+                        elif hand.card3.rank==12:
+                            return 1.12
+                        elif hand.card3.rank==13:
+                            return 1.13
+                        elif hand.card3.rank==14:
+                            return 1.14
+
+
+def straightFlush(hand):
+    if ((hand.card3.rank-1)==(hand.card2.rank)) and ((hand.card2.rank-1)==hand.card1.rank) and ((hand.card1.suit==hand.card2) and (hand.card2.suit==hand.card3.suit)):
+        return True
+    else:
+        return False
+
+def threeOfAKind(hand):
+    if (hand.card1.rank==hand.card2.rank) and (hand.card2.rank==hand.card3.rank):
+       return True
+    else:
+        return False
+
+def straight(hand):
+    if (hand.card3.rank-1)==(hand.card2.rank) and ((hand.card2.rank-1)==hand.card1.rank):
+        return True
+    else:
+        return False
+
+def flush(hand):
+    if ((hand.card1.suit==hand.card2) and (hand.card2.suit==hand.card3.suit)):
+        return True
+    else:
+        return False
+def pair(hand):
+    if (hand.card1.rank==hand.card2.rank) or (hand.card1.rank==hand.card3.rank) or (hand.card2.rank==hand.card3.rank):
+        return True
+    else:
+        return False
+ 
+def doesComputerFold(hand2):
+    if checkRank(hand2)>=1.12:
+       return False
+    else:
+        return True
     
-    
-    
+##def noRepeatCard(hand):
+##    if (hand.card1.rank==hand.card2.rank and hand.card1.suit==hand.card2.suit) or (hand.card1.rank==hand.card3.rank and hand.card1.suit==hand.card3.suit) or (hand.card2.rank==hand.card3.rank and hand.card2.suit==hand.card3.suit): 
+##        return False
+##    else:
+##        return True
 main()     
+    
+    
+        
+        
+    
+        
+    
+        
+
+
+
+
+
+
+
+
